@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './Register.css';
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -19,25 +20,28 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h2>Register</h2>
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        style={{ display: 'block', marginBottom: '1rem', padding: '0.5rem' }}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        style={{ display: 'block', marginBottom: '1rem', padding: '0.5rem' }}
-      />
-      <button onClick={handleRegister} style={{ padding: '0.5rem 1rem' }}>
-        Register
-      </button>
+    <div className="register-container">
+      <div className="register-box">
+        <h2>Register</h2>
+        <input
+          className="register-input"
+          type="email"
+          placeholder="📧 Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <input
+          className="register-input"
+          type="password"
+          placeholder="🔑 Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button className="register-button" onClick={handleRegister}>
+          Register
+        </button>
+      </div>
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './Login.css';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -7,13 +8,14 @@ const Login: React.FC = () => {
 
   const handleLogin = async () => {
     try {
-      const { data }: { data: { token?: string; message?: string } } = await axios.post(
+      const res = await axios.post<{ token: string }>(
         'http://localhost:5000/api/auth/login',
         { email, password }
       );
-      if (data.token) {
-        localStorage.setItem('token', data.token);
-        alert(`Login successful!\nToken: ${data.token}`);
+      const { token } = res.data;
+      if (token) {
+        localStorage.setItem('token', token);
+        alert('✅ Login successful!');
       }
     } catch (err: any) {
       alert(err.response?.data?.message || 'Login failed.');
@@ -21,13 +23,24 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h2>Login</h2>
-      <input type="email" placeholder="Email" value={email}
-        onChange={(e) => setEmail(e.target.value)} /><br /><br />
-      <input type="password" placeholder="Password" value={password}
-        onChange={(e) => setPassword(e.target.value)} /><br /><br />
-      <button onClick={handleLogin}>Login</button>
+    <div className="login-container">
+      <div className="login-box">
+        <h2 className="login-title">🔐 Welcome Back</h2>
+        <p className="login-subtitle">Login to your ECCP account</p>
+        <input
+          type="email"
+          placeholder="📧 Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="🔑 Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button onClick={handleLogin}>Login</button>
+      </div>
     </div>
   );
 };
