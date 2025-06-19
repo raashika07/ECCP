@@ -22,7 +22,8 @@ const Register: React.FC = () => {
   return (
     <div className="register-container">
       <div className="register-box">
-        <h2>Register</h2>
+        <h2>Register📝</h2>
+        <p className="register-Subtitle">Register your ECCP account</p>
         <input
           className="register-input"
           type="email"
