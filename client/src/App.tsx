@@ -1,53 +1,29 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Home from './pages/Home';
+import Dashboard from './pages/Dashboard';
 
-const App: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+import ProtectedRoute from './routes/ProtectedRoute';
 
-  const handleAuth = async (url: 'login' | 'register') => {
-    try {
-      const { data }: { data: { token?: string; message?: string } } = await axios.post(
-        `http://localhost:5000/api/auth/${url}`,
-        { email, password }
-      );
-
-      if (url === 'login' && data.token) {
-        localStorage.setItem('token', data.token);
-        alert(`Login successful!\nToken: ${data.token}`);
-      } else {
-        alert(data.message || 'Registration successful');
-      }
-    } catch (err: any) {
-      alert(err.response?.data?.message || 'Something went wrong.');
-    }
-  };
-
+function App() {
   return (
-    <div style={{ padding: '2rem' }}>
-      <h2>ECCP Login & Registration</h2>
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        style={{ padding: '0.5rem', marginBottom: '1rem', display: 'block' }}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        style={{ padding: '0.5rem', marginBottom: '1rem', display: 'block' }}
-      />
-      <button onClick={() => handleAuth('register')} style={{ marginRight: '1rem' }}>
-        Register
-      </button>
-      <button onClick={() => handleAuth('login')}>Login</button>
-    </div>
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/Home" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route
+          path="/dashboard"
+          element={<ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>} />
+      </Routes>
+    </Router>
   );
-};
+}
 
 export default App;
-
