@@ -6,21 +6,23 @@ const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = async () => {
-    try {
-      const res = await axios.post<{ token: string }>(
-        'http://localhost:5000/api/auth/login',
-        { email, password }
-      );
-      const { token } = res.data;
-      if (token) {
-        localStorage.setItem('token', token);
-        alert('✅ Login successful!');
-      }
-    } catch (err: any) {
-      alert(err.response?.data?.message || 'Login failed.');
-    }
-  };
+ const handleLogin = async () => {
+  try {
+    const response = await axios.post<{ message?: string; token?: string }>(
+      'http://localhost:5000/api/auth/login',
+      { email, password }
+    );
+
+    alert(response.data.message || 'Login successful!');
+    // Store token & redirect to home/dashboard
+    localStorage.setItem('token', response.data.token || '');
+    window.location.href = '/home';
+  } catch (err: any) {
+    const msg = err.response?.data?.message || 'Login failed.';
+    alert(msg);
+  }
+};
+
 
   return (
     <div className="login-container">

@@ -13,13 +13,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 const connectDB = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield mongoose_1.default.connect(process.env.MONGO_URI);
-        console.log('MongoDB connected');
+        yield mongoose_1.default.connect(process.env.MONGO_URI, {
+            retryWrites: true,
+            w: 'majority',
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
+        console.log('✅ MongoDB connected');
     }
-    catch (error) {
-        console.error('MongoDB connection error:', error);
+    catch (err) {
+        console.error('❌ MongoDB error:', err);
         process.exit(1);
     }
 });
