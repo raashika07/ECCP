@@ -19,6 +19,7 @@ const connectDB = async () => {
   }
 };
 
+
 export default connectDB;
 export interface IDatabaseConfig {
   uri: string;
