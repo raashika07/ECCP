@@ -94,7 +94,7 @@ const Register: React.FC = () => {
           <option value="elderly">Elderly</option>
           <option value="caregiver">Caregiver</option>
           <option value="doctor">Doctor</option>
-          <option value="admin">Admin</option>
+          
         </select>
 
         <button className="register-button" onClick={handleRegister}>
