@@ -1,0 +1,21 @@
+# Node
+node_modules/
+backend/node_modules/
+frontend/node_modules/
+npm-debug.log*
+yarn.lock
+pnpm-lock.yaml
+
+# Builds
+dist/
+build/
+frontend/dist/
+backend/dist/
+
+# Env / secrets
+.env
+frontend/.env
+backend/.env
+
+# Uploads & generated
+backend/uploads/
